@@ -75,8 +75,17 @@ def fit(draw, text, path, start, width, max_lines=2, min_size=40):
 
 # ---------- katmanlar ----------
 
-def arka_plan(src):
-    """Sunucu görüntüsünü (fotoğraf ya da konuşan videonun bir karesi) 1080x1920 sahneye yerleştirir."""
+def arka_plan(src, yerlesim="alt"):
+    """Sunucu görüntüsünü (fotoğraf ya da konuşan videonun bir karesi) 1080x1920 sahneye yerleştirir.
+
+    yerlesim="alt": düz fonlu portre aşağı kaydırılır, üst boşluk fon rengiyle dolar (yazılar üstte).
+    yerlesim="tam": ortamlı görsel ekranı kaplar (yazılar yüzün altında, `yazi_y`/`kart_y`).
+    """
+    if yerlesim == "tam":
+        s = max(W / src.width, H / src.height)
+        r = src.resize((round(src.width * s), round(src.height * s)), Image.LANCZOS)
+        x0 = (r.width - W) // 2
+        return r.crop((x0, 0, x0 + W, H))
     s = W / src.width
     src = src.resize((W, round(src.height * s)), Image.LANCZOS)
     y_off = H - src.height + SUNUCU_KAYMA
@@ -89,9 +98,9 @@ def arka_plan(src):
     return canvas
 
 
-def kamera(bg, scale, aci=0.0, dx=0.0, dy=0.0):
+def kamera(bg, scale, aci=0.0, dx=0.0, dy=0.0, pivot=PIVOT):
     """Yakınlaşma + hafif dönme/kayma (tek afin dönüşüm). scale >= 1.02 iken kenar boşluğu görünmez."""
-    px, py = PIVOT
+    px, py = pivot
     r = math.radians(aci)
     a, b = math.cos(r) / scale, math.sin(r) / scale
     d, e = -math.sin(r) / scale, math.cos(r) / scale
@@ -114,7 +123,8 @@ class SunucuKareleri:
 
     def __init__(self, cfg):
         self.foto = Image.open(cfg["sunucu_gorsel"]).convert("RGB")
-        self.sabit = arka_plan(self.foto)
+        self.yerlesim = cfg.get("yerlesim", "alt")
+        self.sabit = arka_plan(self.foto, self.yerlesim)
         self.proc = None
         v = cfg.get("sunucu_video")
         if v:
@@ -127,7 +137,7 @@ class SunucuKareleri:
         if self.proc:
             buf = self.proc.stdout.read(self.w * self.h * 3)
             if len(buf) == self.w * self.h * 3:
-                return arka_plan(Image.frombuffer("RGB", (self.w, self.h), buf))
+                return arka_plan(Image.frombuffer("RGB", (self.w, self.h), buf), self.yerlesim)
             self.proc = None
         return self.sabit
 
@@ -239,11 +249,11 @@ def kare(cfg, bg, katmanlar, logo, t):  # bg: bu karenin sahnesi
     if i == len(bols) - 1:  # döngü: son 0,4 sn'de ilk kareye dön
         r = min(max((lt - (dur - 0.4)) / 0.4, 0), 1)
         scale = scale * (1 - r) + 1.03 * r
-    fr = kamera(bg, scale, *nefes(t, cfg["sure"])).convert("RGBA")
+    fr = kamera(bg, scale, *nefes(t, cfg["sure"]), pivot=tuple(cfg.get("pivot", PIVOT))).convert("RGBA")
 
     mid = (BANT_X0 + BANT_X1) / 2
     if b["tip"] in ("kanca", "kapanis"):
-        y = 390
+        y = cfg.get("yazi_y", 390)
         for n, s in enumerate(k["satirlar"]):
             # ilk bölüm ilk karede tam görünür (kanca 0. saniyede okunmalı; döngü de bu kareye döner)
             sc = 1.0 if i == 0 else ease_out_back((lt - n * 0.1) / 0.2)
@@ -261,7 +271,8 @@ def kare(cfg, bg, katmanlar, logo, t):  # bg: bu karenin sahnesi
     else:
         kimg = k["kart"]
         sc = ease_out_back(lt / 0.18)
-        cy = KART_Y + kimg.height / 2
+        kart_y = cfg.get("kart_y", KART_Y)
+        cy = kart_y + kimg.height / 2
         yapistir_olcekli(fr, kimg, mid + 10, cy, sc)
         st = 0.45 if b["tip"] == "yanlis" else 0.15
         if lt >= st:
@@ -269,9 +280,10 @@ def kare(cfg, bg, katmanlar, logo, t):  # bg: bu karenin sahnesi
             s2 = 1.8 - 0.8 * p
             dx, dy = k["damga"]
             x0 = mid + 10 - kimg.width / 2
-            yapistir_olcekli(fr, k["isaret"], x0 + dx + 70, KART_Y + dy + 70, s2)
+            yapistir_olcekli(fr, k["isaret"], x0 + dx + 70, kart_y + dy + 70, s2)
 
-    fr.alpha_composite(logo, (40, 200))
+    if cfg.get("kose_logo", True):
+        fr.alpha_composite(logo, (40, 200))
     return fr.convert("RGB")
 
 

@@ -1,20 +1,125 @@
 {
   "cikti": "videolar/01-deyimleri-birebir-cevirdim/hapi-yuttuk.mp4",
-  "sunucu_gorsel": "brand/sunucu/zeynep-on-gri-fon.png",
+  "sunucu_gorsel": "brand/sunucu/zeynep-ofis-sahne.png",
+  "yerlesim": "tam",
+  "pivot": [
+    580,
+    760
+  ],
+  "yazi_y": 1060,
+  "kart_y": 1070,
+  "kose_logo": false,
+  "sunucu_video": null,
   "seslendirme": null,
   "sure": 15.5,
   "bolumler": [
-    {"tip": "kanca", "bas": 0.0, "son": 2.0,
-     "satirlar": [[["“Hapı yuttuk”", "sari"], ["u", "beyaz"]], [["İngilizceye", "beyaz"]], [["çevirdim", "beyaz"]]],
-     "emoji": "hap", "efekt": "pop"},
-    {"tip": "yanlis", "bas": 2.0, "son": 4.0, "deyim": "Hapı yuttuk", "metin": "We swallowed the pill", "emoji": "hap", "efekt": "yutkunma"},
-    {"tip": "dogru", "bas": 4.0, "son": 6.0, "deyim": "Hapı yuttuk", "on": "Hayır. Doğrusu:", "metin": "We're done for.", "efekt": "ding"},
-    {"tip": "yanlis", "bas": 6.0, "son": 8.0, "deyim": "Kafayı yedim", "metin": "I ate the head", "emoji": "kafa-patlama", "efekt": "isirma"},
-    {"tip": "dogru", "bas": 8.0, "son": 10.0, "deyim": "Kafayı yedim", "on": "Doğrusu:", "metin": "I've lost my mind.", "efekt": "ding"},
-    {"tip": "yanlis", "bas": 10.0, "son": 12.0, "deyim": "Etekleri zil çalıyor", "metin": "Her skirts are ringing bells", "emoji": "zil", "emoji2": "elbise", "efekt": "zil"},
-    {"tip": "dogru", "bas": 12.0, "son": 14.0, "deyim": "Etekleri zil çalıyor", "on": "Doğrusu:", "metin": "She's over the moon.", "efekt": "ding"},
-    {"tip": "kapanis", "bas": 14.0, "son": 15.5,
-     "satirlar": [[["Sıradakini", "beyaz"]], [["sen yaz", "sari"]]],
-     "alt": "…yoksa hapı yuttuk", "emoji": "asagi", "efekt": "pop"}
+    {
+      "tip": "kanca",
+      "bas": 0.0,
+      "son": 2.0,
+      "satirlar": [
+        [
+          [
+            "“Hapı yuttuk”",
+            "sari"
+          ],
+          [
+            "u",
+            "beyaz"
+          ]
+        ],
+        [
+          [
+            "İngilizceye",
+            "beyaz"
+          ]
+        ],
+        [
+          [
+            "çevirdim",
+            "beyaz"
+          ]
+        ]
+      ],
+      "emoji": "hap",
+      "efekt": "pop"
+    },
+    {
+      "tip": "yanlis",
+      "bas": 2.0,
+      "son": 4.0,
+      "deyim": "Hapı yuttuk",
+      "metin": "We swallowed the pill",
+      "emoji": "hap",
+      "efekt": "yutkunma"
+    },
+    {
+      "tip": "dogru",
+      "bas": 4.0,
+      "son": 6.0,
+      "deyim": "Hapı yuttuk",
+      "on": "Hayır. Doğrusu:",
+      "metin": "We're done for.",
+      "efekt": "ding"
+    },
+    {
+      "tip": "yanlis",
+      "bas": 6.0,
+      "son": 8.0,
+      "deyim": "Kafayı yedim",
+      "metin": "I ate the head",
+      "emoji": "kafa-patlama",
+      "efekt": "isirma"
+    },
+    {
+      "tip": "dogru",
+      "bas": 8.0,
+      "son": 10.0,
+      "deyim": "Kafayı yedim",
+      "on": "Doğrusu:",
+      "metin": "I've lost my mind.",
+      "efekt": "ding"
+    },
+    {
+      "tip": "yanlis",
+      "bas": 10.0,
+      "son": 12.0,
+      "deyim": "Etekleri zil çalıyor",
+      "metin": "Her skirts are ringing bells",
+      "emoji": "zil",
+      "emoji2": "elbise",
+      "efekt": "zil"
+    },
+    {
+      "tip": "dogru",
+      "bas": 12.0,
+      "son": 14.0,
+      "deyim": "Etekleri zil çalıyor",
+      "on": "Doğrusu:",
+      "metin": "She's over the moon.",
+      "efekt": "ding"
+    },
+    {
+      "tip": "kapanis",
+      "bas": 14.0,
+      "son": 15.5,
+      "satirlar": [
+        [
+          [
+            "Sıradakini",
+            "beyaz"
+          ]
+        ],
+        [
+          [
+            "sen yaz",
+            "sari"
+          ]
+        ]
+      ],
+      "alt": "…yoksa hapı yuttuk",
+      "emoji": "asagi",
+      "efekt": "pop"
+    }
   ]
 }

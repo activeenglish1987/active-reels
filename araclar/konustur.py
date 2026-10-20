@@ -31,7 +31,7 @@ from musetalk.models.unet import PositionalEncoding, UNet  # noqa: E402
 from musetalk.models.vae import VAE  # noqa: E402
 from musetalk.utils.audio_processor import AudioProcessor  # noqa: E402
 
-YUZ = Path("brand/sunucu/zeynep-yuz.json")
+YUZ = Path(os.environ.get("YUZ_JSON", "brand/sunucu/zeynep-ofis-yuz.json"))
 
 
 def agiz_maskesi(h, w, yuz):
@@ -41,7 +41,13 @@ def agiz_maskesi(h, w, yuz):
     rx, ry = yuz["maske_yaricap"]
     cv2.ellipse(m, (cx, cy), (rx, ry), 0, 0, 360, 1.0, -1)
     k = yuz["maske_yumusatma"] | 1
-    return cv2.GaussianBlur(m, (k, k), 0)
+    m = cv2.GaussianBlur(m, (k, k), 0)
+    # üretilen yüz yalnız kutunun içinde var: kutu kenarına yaklaşırken maskeyi sıfırla (ek yeri çizgisi olmasın)
+    x1, y1, x2, y2 = yuz["kutu"]
+    kutu = np.zeros((h, w), np.float32)
+    kutu[y1 + 14:y2 - 14, x1 + 14:x2 - 14] = 1.0
+    kutu = cv2.GaussianBlur(kutu, (27, 27), 0)
+    return m * kutu
 
 
 @torch.no_grad()

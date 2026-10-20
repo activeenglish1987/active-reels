@@ -1,0 +1,19 @@
+{
+  "gorsel": "brand/sunucu/zeynep-ofis-sahne.png",
+  "aciklama": "zeynep-ofis-sahne.png (1024x1536) üzerinde elle ölçülen yüz noktaları; kutu = MuseTalk yüz kutusu [x1,y1,x2,y2] (çene genişliği, burun sırtı y=530 etrafında simetrik, çene + 10 px).",
+  "kutu": [
+    360,
+    310,
+    725,
+    760
+  ],
+  "agiz_merkez": [
+    558,
+    650
+  ],
+  "maske_yaricap": [
+    160,
+    115
+  ],
+  "maske_yumusatma": 41
+}
