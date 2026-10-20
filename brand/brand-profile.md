@@ -66,7 +66,7 @@
 - **Paylaşım sıklığı:** `[sorulacak]`
 
 ## Operasyonel varsayılanlar
-- **Yapay zekâ ve sentetik medya:** AI sunucu karakteri **Zeynep** kullanılır (bkz. `brand/sunucu-zeynep.md`): gerçek kişi değildir, öğretmen/öğrenci olarak sunulmaz, her videoda platform AI etiketi + açıklamada not. Gerçek kişilerin yüzü ya da sesi klonlanmaz. Yabancı dil telaffuz örnekleri gerçek öğretmen kayıtlarıyla verilir.
+- **Yapay zekâ ve sentetik medya:** AI sunucu karakteri **Zeynep** kullanılır (bkz. `brand/sunucu-zeynep.md`): gerçek kişi değildir, öğretmen/öğrenci olarak sunulmaz; videoda ve açıklamada gerçeklik/AI hakkında iddia yok, paylaşımda platform AI etiketi açık. Gerçek kişilerin yüzü ya da sesi klonlanmaz. Yabancı dil telaffuz örnekleri gerçek öğretmen kayıtlarıyla verilir.
 - **Erişilebilirlik:** Her videoda tam gömülü altyazı (sessiz izleyen anlamalı); yüksek kontrast; kapakta en fazla 4 kelime.
 - **Görsel kimlik:** → `brand/marka-kiti.md`
 

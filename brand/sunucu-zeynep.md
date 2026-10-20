@@ -20,11 +20,10 @@
 - Zeynep Türkçe çerçeveyi anlatır (kanca, geçiş, kapanış).
 - Yabancı dildeki örnek cümleler ve telaffuz anları **okulun ilgili dil öğretmenlerinin gerçek kayıtlarıyla** verilir (yazılı izinle). Sentetik ses yabancı kelimeleri yanlış okuyabilir; doğruluk kuralı gereği telaffuz gösterimi insan sesiyle yapılır.
 
-## Şeffaflık (zorunlu, her videoda)
-1. Instagram'da paylaşırken **"Yapay zekâ bilgisi" etiketi açık**. TikTok'ta AI-generated etiketi, YouTube'da "değiştirilmiş veya sentetik içerik" bildirimi.
-2. Açıklamanın sonunda: "Sunucumuz Zeynep yapay zekâ ile oluşturulmuş bir karakterdir."
-3. İsteğe bağlı: Zeynep'in ilk göründüğü karede köşede küçük "AI" rozeti.
-4. Profilde (bio ya da sabitlenmiş gönderi) Zeynep'in AI karakter olduğu bir kez açıklanır.
+## Şeffaflık
+- **Videoda ve açıklamada** Zeynep'in gerçek ya da yapay zekâ olduğuna dair hiçbir şey söylenmez; iki yönde de iddia yok, izleyici kendisi karar verir (karar: 2026-10-20).
+- **Platform etiketi her paylaşımda açık** (platform kuralı): Instagram "Yapay zekâ bilgisi", TikTok "AI-generated", YouTube "değiştirilmiş veya sentetik içerik" bildirimi.
+- Zeynep gerçek bir kişi gibi tanıtılmaz (öğretmen, öğrenci, çalışan, kişisel hayat hikâyesi yok).
 
 ## Kullanım dengesi
 - Zeynep videoların yaklaşık üçte birinde omurga olsun; gerçek insanlı videolarla karıştırılsın (tek avatara yaslanan hesaplarda ilgi zamanla düşer).
