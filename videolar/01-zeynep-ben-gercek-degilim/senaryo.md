@@ -10,12 +10,12 @@
 - **A)** Ekran: "Ben gerçek değilim 🤖" / Söz: "Ben gerçek değilim."
 - **B)** Ekran: "'I am agree' diyorsan dur ✋" / Söz: "'I am agree' diyorsan, bu video senin için."
 - **C)** Ekran: "Bir yapay zekâ sana İngilizce öğretse?" / Söz: "Bir yapay zekâ sana İngilizce hatanı söylese kızar mısın?"
-- **İlk kare:** Zeynep yakın plan, gülümseyerek kameraya bakıyor; sağ üstte "Yapay zekâ karakteri" rozeti.
+- **İlk kare:** Zeynep yakın plan, gülümseyerek kameraya bakıyor.
 
 ## Saniye saniye
 | Sn | Görüntü / değişim | Ekran yazısı | Ses |
 |---|---|---|---|
-| 0–1,5 | Zeynep yakın plan, rozet | Ben **gerçek** değilim 🤖 | Z: "Ben gerçek değilim." |
+| 0–1,5 | Zeynep yakın plan | Ben **gerçek** değilim 🤖 | Z: "Ben gerçek değilim." |
 | 1,5–3,5 | Glitch geçişi, hafif yakınlaşma | Ama bu hata **çok gerçek** | Z: "Ama birazdan yapacağın İngilizce hata çok gerçek." · glitch SFX |
 | 3,5–6 | Kesme: ekranın üst yarısı grafik kart, Zeynep alt yarıda | I **am** agree ❌ | Z: "Toplantıda, derste, sohbette: I am agree." · buzzer |
 | 6–8 | Kart değişir | **agree** = katılmak (fiil) | Z: "Agree zaten bir fiil. Başına 'am' gelmez." |
