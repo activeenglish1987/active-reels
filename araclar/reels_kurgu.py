@@ -75,8 +75,8 @@ def fit(draw, text, path, start, width, max_lines=2, min_size=40):
 
 # ---------- katmanlar ----------
 
-def arka_plan(cfg):
-    src = Image.open(cfg["sunucu_gorsel"]).convert("RGB")
+def arka_plan(src):
+    """Sunucu görüntüsünü (fotoğraf ya da konuşan videonun bir karesi) 1080x1920 sahneye yerleştirir."""
     s = W / src.width
     src = src.resize((W, round(src.height * s)), Image.LANCZOS)
     y_off = H - src.height + SUNUCU_KAYMA
@@ -89,14 +89,47 @@ def arka_plan(cfg):
     return canvas
 
 
-def zoomed(bg, scale):
-    if abs(scale - 1) < 1e-3:
-        return bg.copy()
-    cw, ch = W / scale, H / scale
+def kamera(bg, scale, aci=0.0, dx=0.0, dy=0.0):
+    """Yakınlaşma + hafif dönme/kayma (tek afin dönüşüm). scale >= 1.02 iken kenar boşluğu görünmez."""
     px, py = PIVOT
-    x0 = min(max(px - cw * px / W, 0), W - cw)
-    y0 = min(max(py - ch * py / H, 0), H - ch)
-    return bg.resize((W, H), Image.BILINEAR, box=(x0, y0, x0 + cw, y0 + ch))
+    r = math.radians(aci)
+    a, b = math.cos(r) / scale, math.sin(r) / scale
+    d, e = -math.sin(r) / scale, math.cos(r) / scale
+    c = px - dx - (a * px + b * py)
+    f = py - dy - (d * px + e * py)
+    return bg.transform((W, H), Image.AFFINE, (a, b, c, d, e, f), resample=Image.BILINEAR)
+
+
+def nefes(t, sure):
+    """Canlılık hareketi: yavaş baş salınımı ve nefes. Başta ve sonda sıfır (döngü bozulmasın)."""
+    zarf = math.sin(math.pi * min(max(t / sure, 0), 1))
+    aci = 0.7 * math.sin(2 * math.pi * t / 4.3) * zarf
+    dx = 5 * math.sin(2 * math.pi * t / 5.1) * zarf
+    dy = 7 * math.sin(2 * math.pi * t / 3.4) * zarf
+    return aci, dx, dy
+
+
+class SunucuKareleri:
+    """Konuşan video varsa karelerini sırayla okur; yoksa / bitince sabit fotoğrafı verir."""
+
+    def __init__(self, cfg):
+        self.foto = Image.open(cfg["sunucu_gorsel"]).convert("RGB")
+        self.sabit = arka_plan(self.foto)
+        self.proc = None
+        v = cfg.get("sunucu_video")
+        if v:
+            self.w, self.h = self.foto.size
+            self.proc = subprocess.Popen(
+                ["ffmpeg", "-loglevel", "error", "-i", v, "-vf", f"fps={FPS},scale={self.w}:{self.h}",
+                 "-f", "rawvideo", "-pix_fmt", "rgb24", "-"], stdout=subprocess.PIPE)
+
+    def sonraki(self):
+        if self.proc:
+            buf = self.proc.stdout.read(self.w * self.h * 3)
+            if len(buf) == self.w * self.h * 3:
+                return arka_plan(Image.frombuffer("RGB", (self.w, self.h), buf))
+            self.proc = None
+        return self.sabit
 
 
 def altyazi_satiri(parts, size=104, stroke=10):
@@ -195,29 +228,30 @@ def yapistir_olcekli(frame, img, cx, cy, scale):
     frame.alpha_composite(img, (int(cx - img.width / 2), int(cy - img.height / 2)))
 
 
-def kare(cfg, bg, katmanlar, logo, t):
+def kare(cfg, bg, katmanlar, logo, t):  # bg: bu karenin sahnesi
     bols = cfg["bolumler"]
     i = next((j for j, b in enumerate(bols) if b["bas"] <= t < b["son"]), len(bols) - 1)
     b, k = bols[i], katmanlar[i]
     lt, dur = t - b["bas"], b["son"] - b["bas"]
 
     # arka plan: çift bölümler geniş, tek bölümler yakın kadraj; bölüm içinde yavaş yakınlaşma
-    scale = (1.0 if i % 2 == 0 else 1.09) + 0.035 * (lt / dur)
+    scale = (1.03 if i % 2 == 0 else 1.10) + 0.035 * (lt / dur)
     if i == len(bols) - 1:  # döngü: son 0,4 sn'de ilk kareye dön
         r = min(max((lt - (dur - 0.4)) / 0.4, 0), 1)
-        scale = scale * (1 - r) + 1.0 * r
-    fr = zoomed(bg, scale).convert("RGBA")
+        scale = scale * (1 - r) + 1.03 * r
+    fr = kamera(bg, scale, *nefes(t, cfg["sure"])).convert("RGBA")
 
     mid = (BANT_X0 + BANT_X1) / 2
     if b["tip"] in ("kanca", "kapanis"):
         y = 390
         for n, s in enumerate(k["satirlar"]):
-            sc = ease_out_back((lt - n * 0.1) / 0.2)
+            # ilk bölüm ilk karede tam görünür (kanca 0. saniyede okunmalı; döngü de bu kareye döner)
+            sc = 1.0 if i == 0 else ease_out_back((lt - n * 0.1) / 0.2)
             cx = mid - (k["emoji"].width / 2 + 10 if n == len(k["satirlar"]) - 1 else 0)
             yapistir_olcekli(fr, s, cx, y + s.height / 2, sc)
             if n == len(k["satirlar"]) - 1:  # emoji son satırın sağında zıplar
                 bounce = abs(math.sin(2 * math.pi * 1.6 * lt)) * 18
-                esc = ease_out_back((lt - 0.25) / 0.2)
+                esc = 1.0 if i == 0 else ease_out_back((lt - 0.25) / 0.2)
                 yapistir_olcekli(fr, k["emoji"], cx + s.width / 2 + k["emoji"].width / 2,
                                  y + s.height / 2 - bounce, esc)
             y += 118
@@ -275,7 +309,7 @@ def ses_karisimi(cfg, out_wav):
 
 def main(cfg_path):
     cfg = json.loads(Path(cfg_path).read_text())
-    bg = arka_plan(cfg)
+    sunucu = SunucuKareleri(cfg)
     katmanlar = kur_katmanlar(cfg)
     logo = Image.open(LOGO).convert("RGBA")
     logo.putalpha(logo.getchannel("A").point(lambda v: int(v * 0.5)))
@@ -288,7 +322,7 @@ def main(cfg_path):
              "-r", str(FPS), "-i", "-", "-c:v", "libx264", "-preset", "medium", "-crf", "18",
              "-pix_fmt", "yuv420p", vid], stdin=subprocess.PIPE)
         for f in range(n):
-            enc.stdin.write(kare(cfg, bg, katmanlar, logo, f / FPS).tobytes())
+            enc.stdin.write(kare(cfg, sunucu.sonraki(), katmanlar, logo, f / FPS).tobytes())
         enc.stdin.close()
         enc.wait()
         ses_karisimi(cfg, wav)

@@ -1,0 +1,8 @@
+{
+  "gorsel": "brand/sunucu/zeynep-on-gri-fon.png",
+  "aciklama": "zeynep-on-gri-fon.png (1086x1448) üzerinde elle ölçülen yüz noktaları. kutu = MuseTalk yüz kutusu [x1,y1,x2,y2]: çene hattı genişliği, burun sırtı (y=545) etrafında simetrik, çene altı + 10 px pay.",
+  "kutu": [375, 300, 780, 800],
+  "agiz_merkez": [600, 670],
+  "maske_yaricap": [175, 130],
+  "maske_yumusatma": 41
+}
