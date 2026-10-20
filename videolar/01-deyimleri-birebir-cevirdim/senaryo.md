@@ -1,5 +1,5 @@
 # Video 01 — "Hapı yuttuk'u İngilizceye çevirdim"
-**Durum:** Senaryo onay bekliyor
+**Durum:** Onaylandı · görsel kurgu taslağı hazır (ses efektli, seslendirme bekleniyor)
 **Sunucu:** Zeynep · **Seri:** *Birebir Çevirdim – Bölüm 1* · **Süre:** ~15 sn · döngü
 
 ## Fikir
@@ -8,7 +8,7 @@ Zeynep Türk deyimlerini ciddi yüzle kelimesi kelimesine İngilizceye çevirir,
 ## Saniye saniye
 | Sn | Görüntü / değişim | Ekran yazısı | Zeynep söylüyor | Ses efekti |
 |---|---|---|---|---|
-| 0–2 | Zeynep yakın plan, ciddi yüz | "Hapı yuttuk"u İngilizceye çevirdim 💊 | "Hapı yuttuk'u İngilizceye çevirdim." | pop |
+| 0–2 | Zeynep yakın plan, ciddi yüz | “Hapı yuttuk”u İngilizceye çevirdim 💊 | "Hapı yuttuk"u İngilizceye çevirdim. | pop |
 | 2–4 | Üstte kart: hap görseli, kırmızı ❌ damgası | *We swallowed the pill* ❌ | "We swallowed the pill." | yutkunma + buzzer |
 | 4–6 | Kart yeşile döner, hafif zoom | ✅ **We're done for.** | "Hayır. Doğrusu: We're done for." | ding |
 | 6–8 | Kesme, yeni kart: 🤯 | Kafayı yedim → *I ate the head* ❌ | "Kafayı yedim: I ate the head." | ısırma + buzzer |
